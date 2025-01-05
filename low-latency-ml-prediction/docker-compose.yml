@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mlflow:
+    restart: always
+    build: ./mlflow_setup
+    ports:
+      - "5002:5000"
+    environment:
+      - MLFLOW_TRACKING_URI=file:///mlruns
+    networks:
+      - mlflow_network
+    volumes:
+      - ./mlflow_setup:/mlflow_setup:rw         # Ensure rw permissions for the whole mlflow_setup
+      - ./mlflow_setup/mlruns:/mlruns:rw 
+
+  spark:
+    build: ./spark_app
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5002
+    volumes:
+      - ./mlflow_setup/mlruns:/mlruns
+    ports:
+      - "4040:4040"
+    depends_on:
+      - mlflow
+    networks:
+      - mlflow_network
+    
+
+  api:
+    build: ./api
+    ports:
+      - "5001:5001"
+    environment:
+      - MODEL_NAME=IrisClassifier
+    depends_on:
+      - mlflow
+    networks:
+      - mlflow_network
+
+networks:
+  mlflow_network:
+    driver: bridge
