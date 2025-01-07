@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "Zz0hUF3lBXyQlPSAD70my",
+      "type": "text",
+      "x": 621.7421875,
+      "y": 197.15234375,
+      "width": 1384.839038848877,
+      "height": 2750,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a2",
+      "roundness": null,
+      "seed": 1308190361,
+      "version": 3632,
+      "versionNonce": 730736053,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1736212600863,
+      "link": null,
+      "locked": false,
+      "text": "ML System Design: Event recommendation system\n\nClarification/ Assumption\nFrame as ML problem\nData\n    - Data prep\n    - Feature Engineering\n    - Create train/val/test\nML Model\nEvaluation\n    - loss (imbalanced)\n    - offline and online\nML Deployment and Monitoring\n\nClarification/ Assumption:\n    - BO: maximize event sign up by enrolling user\n    - luma.ai\n    - do we have demographic information on the user?\n        - location, age, gender\n    - do we have an existing model?\n        - we have rule based system, this new system wants to improve the accuracy\n    - historical sign up/ events that can be leveraged\n    - what actions the user action: register, bookmark, approval process\n    - free and paid events\n    - do we have access to user's social graph? No for this use case\n\nML Problem:\n    - recommendation problem: events are short lived\n        - when to recommend the events\n\n    I/O: user -> website -> event recommendation service -> e1, e2...\n\n    step 1: getting a list of candidates\n    step 2: ranking algorithm\n\nData\n    - Data prep\n        - user\n            - demographic info: age, gender, city, country, language\n    \n        - event\n            - host name, event id, location, event description, number of sign up \n\n        - user event interaction\n            - user id, event id, register/\n\n     - Feature Engineering\n        - location:\n            walk score, drive score, bus score\n            distance from the user\n            sim score: look at last X events (if we have access), get the avg walk score of those event - walk score\n        - time related\n            - what time of the day\n            - weekend/ or weekday\n            - how long in the future the event is:\n                - 1-3, 3-5: feature\n            \n        - event \n            - price: free/paid, bucketize + one hot encode free-0, 0-50-2, ..\n            - price similarity: \n\n        - scale/normalization: number of signs\n        - bucketize+one hot encode: age, similarity scores\n        - embedding: city, country, event id\n        - embeddings from pre-trained: image (clip), text (title, description)\n         \n\n    - creating our train/val/test:\n        - split can random because no temporal dependency (?)\n\n\nML Model\n    - step 1: filtering down events by location of user + radius\n            - trending events\n            \n    - step 2:\n        - logistic regression\n            pros: easy to train/ fast inference\n            cons: doesn't work with non linear data\n\n        - GBDT (baseline)\n            pros: robust, works great with missing data\n            cons: unsuitable for continual learning, unable to train embeddings\n    \n        - LTR\n            pointwise\n             pairwise\n                listwise\n            pros: adapted to this type of task\n            cons: we need good labeled data\n\n    Recommendation: GBDT -> pairwise\n\nEvaluation\n    - loss: focal loss (imbalance), CE\n    - offline: precision@k, recall@k, MRR, NDCG\n    - online: CTR, bookmark rate, revenue lift\n\nML Deployment and Monitoring\n    - some features that can be calculated offline/batch, some in online\n    - batch model -> online\n    - k8s+kserve\n\n[Improvement: spent too much time on data, didn't talk about scale, SLAs, how soon the recs be populated,\n    how frequently we need to train/ data becomes stale, category/subcategory of events, more time on optimize for the ML models,\n    model deployment - better clarification in training and inference, completely batch or online, talk about edge cases - what if event came\nrecently, i.e. cold start process]\n    \n\n    ",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "ML System Design: Event recommendation system\n\nClarification/ Assumption\nFrame as ML problem\nData\n    - Data prep\n    - Feature Engineering\n    - Create train/val/test\nML Model\nEvaluation\n    - loss (imbalanced)\n    - offline and online\nML Deployment and Monitoring\n\nClarification/ Assumption:\n    - BO: maximize event sign up by enrolling user\n    - luma.ai\n    - do we have demographic information on the user?\n        - location, age, gender\n    - do we have an existing model?\n        - we have rule based system, this new system wants to improve the accuracy\n    - historical sign up/ events that can be leveraged\n    - what actions the user action: register, bookmark, approval process\n    - free and paid events\n    - do we have access to user's social graph? No for this use case\n\nML Problem:\n    - recommendation problem: events are short lived\n        - when to recommend the events\n\n    I/O: user -> website -> event recommendation service -> e1, e2...\n\n    step 1: getting a list of candidates\n    step 2: ranking algorithm\n\nData\n    - Data prep\n        - user\n            - demographic info: age, gender, city, country, language\n    \n        - event\n            - host name, event id, location, event description, number of sign up \n\n        - user event interaction\n            - user id, event id, register/\n\n     - Feature Engineering\n        - location:\n            walk score, drive score, bus score\n            distance from the user\n            sim score: look at last X events (if we have access), get the avg walk score of those event - walk score\n        - time related\n            - what time of the day\n            - weekend/ or weekday\n            - how long in the future the event is:\n                - 1-3, 3-5: feature\n            \n        - event \n            - price: free/paid, bucketize + one hot encode free-0, 0-50-2, ..\n            - price similarity: \n\n        - scale/normalization: number of signs\n        - bucketize+one hot encode: age, similarity scores\n        - embedding: city, country, event id\n        - embeddings from pre-trained: image (clip), text (title, description)\n         \n\n    - creating our train/val/test:\n        - split can random because no temporal dependency (?)\n\n\nML Model\n    - step 1: filtering down events by location of user + radius\n            - trending events\n            \n    - step 2:\n        - logistic regression\n            pros: easy to train/ fast inference\n            cons: doesn't work with non linear data\n\n        - GBDT (baseline)\n            pros: robust, works great with missing data\n            cons: unsuitable for continual learning, unable to train embeddings\n    \n        - LTR\n            pointwise\n             pairwise\n                listwise\n            pros: adapted to this type of task\n            cons: we need good labeled data\n\n    Recommendation: GBDT -> pairwise\n\nEvaluation\n    - loss: focal loss (imbalance), CE\n    - offline: precision@k, recall@k, MRR, NDCG\n    - online: CTR, bookmark rate, revenue lift\n\nML Deployment and Monitoring\n    - some features that can be calculated offline/batch, some in online\n    - batch model -> online\n    - k8s+kserve\n\n[Improvement: spent too much time on data, didn't talk about scale, SLAs, how soon the recs be populated,\n    how frequently we need to train/ data becomes stale, category/subcategory of events, more time on optimize for the ML models,\n    model deployment - better clarification in training and inference, completely batch or online, talk about edge cases - what if event came\nrecently, i.e. cold start process]\n    \n\n    ",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}

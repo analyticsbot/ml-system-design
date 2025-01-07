@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "HLHoqVNq8Uuq8-LX9OS-7",
+      "type": "text",
+      "x": 574,
+      "y": 151,
+      "width": 1064.9591064453125,
+      "height": 1750,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a2",
+      "roundness": null,
+      "seed": 1499312008,
+      "version": 1686,
+      "versionNonce": 1667823752,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1736212138110,
+      "link": null,
+      "locked": false,
+      "text": "Assumptions/clarification:\n\n- Flag a post created by user.\n- Text, Images & Videos can be harmful.\n-  Assume will be flagged for removal.\n- user has historical demographics and activity information.\n- connections to other users\n\nPROBLEM DEFINTIONS:\n\n- Binary classification. harmful vs not-harmful.\n- Business Metrics : No of reports by users; No of users harmful content reached.\n- Model : Precision, recall, F1-Score. \n\nData processings:\n\nPost:\n - Text, Image: embeddings\n - Video : embeddings.\n - Likes / Reactions : continuous variable\n - Comments :\n- Timing of post: Categorical (by binning)\n- Day of week : Categorical\n\nAuthor:\n- total No of posts, no of harmful posts, percentage_of_harfful posts,\n- t3m_percentage_harful_posts, t3m_no_of_harmful_posts,\n- ....... comments .....\n- No_of_friends\n- Avg_percentage_of_harmful_posts_in_friends\n- age : Categorical\n- location : embeddings \n\n\nModeling:\n\nRandom forest/XGBoost\npros : feature, complexity\nCons : not as powerful as deep learnings, embedding\n\nNeural Network\npro : can perform based embeddings,\ncons : expensive train and takes longer\n\nBINARY cross entropy loss\n\nEvaluations: \n\n- Business Metrics : No of reports by users; No of users harmful content reached.\n- Model : Precision, recall, F1-Score. \n\nA/B testing\n\n\nMl engineering:\n\n- Training/ testing\n- Training can periodical. Sagemaker pipeline, training jobs. ECR.\n- Online inference - scale the models, auto scaling. ECR - sagemaker real time inference endpoint- autoscaling.\n  \n\n\n\n  \n   \n\n\n\n\n",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Assumptions/clarification:\n\n- Flag a post created by user.\n- Text, Images & Videos can be harmful.\n-  Assume will be flagged for removal.\n- user has historical demographics and activity information.\n- connections to other users\n\nPROBLEM DEFINTIONS:\n\n- Binary classification. harmful vs not-harmful.\n- Business Metrics : No of reports by users; No of users harmful content reached.\n- Model : Precision, recall, F1-Score. \n\nData processings:\n\nPost:\n - Text, Image: embeddings\n - Video : embeddings.\n - Likes / Reactions : continuous variable\n - Comments :\n- Timing of post: Categorical (by binning)\n- Day of week : Categorical\n\nAuthor:\n- total No of posts, no of harmful posts, percentage_of_harfful posts,\n- t3m_percentage_harful_posts, t3m_no_of_harmful_posts,\n- ....... comments .....\n- No_of_friends\n- Avg_percentage_of_harmful_posts_in_friends\n- age : Categorical\n- location : embeddings \n\n\nModeling:\n\nRandom forest/XGBoost\npros : feature, complexity\nCons : not as powerful as deep learnings, embedding\n\nNeural Network\npro : can perform based embeddings,\ncons : expensive train and takes longer\n\nBINARY cross entropy loss\n\nEvaluations: \n\n- Business Metrics : No of reports by users; No of users harmful content reached.\n- Model : Precision, recall, F1-Score. \n\nA/B testing\n\n\nMl engineering:\n\n- Training/ testing\n- Training can periodical. Sagemaker pipeline, training jobs. ECR.\n- Online inference - scale the models, auto scaling. ECR - sagemaker real time inference endpoint- autoscaling.\n  \n\n\n\n  \n   \n\n\n\n\n",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
