@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "YMFTvvt6waQMMg6VOn7XQ",
+      "type": "text",
+      "x": 398,
+      "y": 152,
+      "width": 1441.099609375,
+      "height": 2125,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b5g",
+      "roundness": null,
+      "seed": 1514379420,
+      "version": 3575,
+      "versionNonce": 1554395940,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1736235056099,
+      "link": null,
+      "locked": false,
+      "text": "ML System Design: Harmful Content Detection\n\nClarification/Assumptions\nFrame as ML problem\nData\n    - Data prep\n    - Feature Engineering\n    - create train/val/test set\nML Model\nEvaluation\nML Deployment and monitoring\n\nClarification:\n    - which website is this system needed for?\n    - do we have an existing system in place?\n    - why do we need this new system? is it because of better accuracy or improved latency?\n    - what is the scale of the system?\n    - do we have labeled data? can we trust the labeled data\n    - can users flag content for removal?\n    - what type of content - text, image, video\n    - do we need only harmful/ not harmful or further classification\n\nBO: to detect if a post doesn't belong on platform. users feel secure to use the platform. advertisers dont complain\n\nML Problem:\n- to predict if a given post is harmful and belongs to which class\n- classification problem\n\nData\n    - Data prep\n        - user\n            - how long the user has been active\n            - demographic (PII, so not sure if we can use it)\n            - previous number of removals\n            - city, country\n            - language\n            - what posts the user has liked, commented on\n        - post\n            - user id\n            - content: text, image, video, comments\n            - likes, shares\n            - timestamp when this was posted\n\n    - Feature Engineering\n        - scale/normalize: likes/ shares\n        - bucketize+ one hot encode -> embedding\n        - embedding: city, country, user id\n        - embedding using a pre-trained model: text (word2vec, BERT), image (CLIP, resnet50), video (select frames, use a image mode\n                                            and avg the embedding, or use video models such as videoMAE, VideoMOCO)\n                - comments: avg the embeddings for comments\n    \n    - creating train/ val/ test\n        - this is imbalanced\n        - also temporal pattern will exist, so need to be mindful of that\n        X: features that we create\n        y: either binary or which class this belongs to\n\nML Model\n      - logistic regression (multi class)\n        pros: easy to train, fast inference\n        cons: doesn't work well with non-linear data, might not be able to use embeddings\n\n      - random forest\n        pros: easy to train, can capture non-linear data\n        cons: will not be able to work with emebeddings\n\n       - GBDT\n        pros: very robust, accurate\n        cons: too many hyperparameters\n\n        - Neural Network (multi task)\n        pros: can model non linear data, use embeddings, fine tune them\n        cons: needs a lot of data, expensive to train\n\n    Recommendation: use GBDT as baseline and then move to neural network\n\nEvaluation\n    - loss: CE or if multi task then individual heads will have its own loss (CE) and then sum it up\n    - offline: precision, recall, f1 score\n    - online: number of valid re-appeals, number of posts caught before user reports, number of user reports\n\nML Deployment and Monitoring\n     - deployment using AWS sagemaker/ GCP Vertex AI or customer K8s/kserve infra\n     - batch process: runs every few hours, if confidence score >threshold flag for removal. If <t2, post ok. otherwise send to human\n     - monitoring : prometheus/ grafana dashboard",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "ML System Design: Harmful Content Detection\n\nClarification/Assumptions\nFrame as ML problem\nData\n    - Data prep\n    - Feature Engineering\n    - create train/val/test set\nML Model\nEvaluation\nML Deployment and monitoring\n\nClarification:\n    - which website is this system needed for?\n    - do we have an existing system in place?\n    - why do we need this new system? is it because of better accuracy or improved latency?\n    - what is the scale of the system?\n    - do we have labeled data? can we trust the labeled data\n    - can users flag content for removal?\n    - what type of content - text, image, video\n    - do we need only harmful/ not harmful or further classification\n\nBO: to detect if a post doesn't belong on platform. users feel secure to use the platform. advertisers dont complain\n\nML Problem:\n- to predict if a given post is harmful and belongs to which class\n- classification problem\n\nData\n    - Data prep\n        - user\n            - how long the user has been active\n            - demographic (PII, so not sure if we can use it)\n            - previous number of removals\n            - city, country\n            - language\n            - what posts the user has liked, commented on\n        - post\n            - user id\n            - content: text, image, video, comments\n            - likes, shares\n            - timestamp when this was posted\n\n    - Feature Engineering\n        - scale/normalize: likes/ shares\n        - bucketize+ one hot encode -> embedding\n        - embedding: city, country, user id\n        - embedding using a pre-trained model: text (word2vec, BERT), image (CLIP, resnet50), video (select frames, use a image mode\n                                            and avg the embedding, or use video models such as videoMAE, VideoMOCO)\n                - comments: avg the embeddings for comments\n    \n    - creating train/ val/ test\n        - this is imbalanced\n        - also temporal pattern will exist, so need to be mindful of that\n        X: features that we create\n        y: either binary or which class this belongs to\n\nML Model\n      - logistic regression (multi class)\n        pros: easy to train, fast inference\n        cons: doesn't work well with non-linear data, might not be able to use embeddings\n\n      - random forest\n        pros: easy to train, can capture non-linear data\n        cons: will not be able to work with emebeddings\n\n       - GBDT\n        pros: very robust, accurate\n        cons: too many hyperparameters\n\n        - Neural Network (multi task)\n        pros: can model non linear data, use embeddings, fine tune them\n        cons: needs a lot of data, expensive to train\n\n    Recommendation: use GBDT as baseline and then move to neural network\n\nEvaluation\n    - loss: CE or if multi task then individual heads will have its own loss (CE) and then sum it up\n    - offline: precision, recall, f1 score\n    - online: number of valid re-appeals, number of posts caught before user reports, number of user reports\n\nML Deployment and Monitoring\n     - deployment using AWS sagemaker/ GCP Vertex AI or customer K8s/kserve infra\n     - batch process: runs every few hours, if confidence score >threshold flag for removal. If <t2, post ok. otherwise send to human\n     - monitoring : prometheus/ grafana dashboard",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
